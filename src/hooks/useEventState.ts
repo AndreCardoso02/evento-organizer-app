@@ -5,12 +5,26 @@ import { BudgetItem, CashEntry, ChecklistItem } from '../types';
 import { recommendPurchases, remaining } from '../logic';
 
 const STORAGE_KEY = '@nosso-evento/state-v2';
+const LEGACY_STORAGE_KEY = '@nosso-evento/state-v1';
 
 type PersistedState = {
   items: BudgetItem[];
   cashEntries: CashEntry[];
   checklist: ChecklistItem[];
 };
+
+function applySavedState(
+  saved: Partial<PersistedState>,
+  setters: {
+    setItems: React.Dispatch<React.SetStateAction<BudgetItem[]>>;
+    setCashEntries: React.Dispatch<React.SetStateAction<CashEntry[]>>;
+    setChecklist: React.Dispatch<React.SetStateAction<ChecklistItem[]>>;
+  },
+) {
+  setters.setItems(saved.items ?? initialBudgetItems);
+  setters.setCashEntries(saved.cashEntries ?? initialCashEntries);
+  setters.setChecklist(saved.checklist ?? initialChecklist);
+}
 
 export function useEventState() {
   const [items, setItems] = useState<BudgetItem[]>(initialBudgetItems);
@@ -19,16 +33,28 @@ export function useEventState() {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    AsyncStorage.getItem(STORAGE_KEY)
-      .then(raw => {
-        if (!raw) return;
-        const saved = JSON.parse(raw) as Partial<PersistedState>;
-        setItems(saved.items ?? initialBudgetItems);
-        setCashEntries(saved.cashEntries ?? initialCashEntries);
-        setChecklist(saved.checklist ?? initialChecklist);
-      })
-      .catch(error => console.warn('Falha ao carregar dados do evento', error))
-      .finally(() => setHydrated(true));
+    const hydrate = async () => {
+      try {
+        const currentRaw = await AsyncStorage.getItem(STORAGE_KEY);
+        const legacyRaw = currentRaw ? null : await AsyncStorage.getItem(LEGACY_STORAGE_KEY);
+        const raw = currentRaw ?? legacyRaw;
+
+        if (raw) {
+          const saved = JSON.parse(raw) as Partial<PersistedState>;
+          applySavedState(saved, { setItems, setCashEntries, setChecklist });
+
+          if (!currentRaw && legacyRaw) {
+            await AsyncStorage.setItem(STORAGE_KEY, legacyRaw);
+          }
+        }
+      } catch (error) {
+        console.warn('Falha ao carregar dados do evento', error);
+      } finally {
+        setHydrated(true);
+      }
+    };
+
+    hydrate();
   }, []);
 
   useEffect(() => {
