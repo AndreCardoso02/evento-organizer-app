@@ -3,5 +3,11 @@ node_modules/
 dist/
 web-build/
 .env
+.env.*
+!.env.example
 *.log
 .DS_Store
+*.p8
+*.p12
+*.mobileprovision
+credentials.json

@@ -4,10 +4,43 @@
     "slug": "nosso-evento",
     "version": "1.0.0",
     "orientation": "portrait",
-    "userInterfaceStyle": "light",
-    "splash": {"backgroundColor": "#F8F4F0"},
-    "android": {"package": "ao.nossoevento.app"},
-    "ios": {"bundleIdentifier": "ao.nossoevento.app"},
-    "web": {"bundler": "metro"}
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "scheme": "nossoevento",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "ao.nossoevento.app",
+      "buildNumber": "1",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "ao.nossoevento.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#FFFFFF"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "eee58138-f342-455f-a3f8-ffd942305a4d"
+      }
+    },
+    "owner": "acardoso02"
   }
 }

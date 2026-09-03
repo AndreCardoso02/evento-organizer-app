@@ -3,22 +3,36 @@
   "version": "1.0.0",
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "scripts": {
     "start": "expo start",
+    "start:clear": "expo start -c",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "typecheck": "tsc --noEmit"
+    "doctor": "npx expo-doctor",
+    "fix:deps": "npx expo install --fix",
+    "typecheck": "tsc --noEmit",
+    "eas:login": "eas login",
+    "eas:init": "eas init",
+    "build:ios:preview": "eas build --platform ios --profile preview",
+    "build:ios": "eas build --platform ios --profile production",
+    "submit:ios": "eas submit --platform ios --profile production --latest",
+    "release:ios": "eas build --platform ios --profile production --auto-submit",
+    "credentials:ios": "eas credentials --platform ios"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^2.2.0",
-    "expo": "~54.0.0",
-    "expo-status-bar": "~3.0.0",
-    "react": "19.1.0",
-    "react-native": "0.81.4"
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "expo": "~57.0.19",
+    "expo-splash-screen": "~57.0.8",
+    "expo-status-bar": "~57.0.1",
+    "react": "19.2.3",
+    "react-native": "0.86.3"
   },
   "devDependencies": {
-    "@types/react": "~19.1.10",
-    "typescript": "~5.9.2"
+    "@types/react": "~19.2.0",
+    "typescript": "~6.0.3"
   }
 }
