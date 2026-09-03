@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "Nosso Evento",
+    "slug": "nosso-evento",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {"backgroundColor": "#F8F4F0"},
+    "android": {"package": "ao.nossoevento.app"},
+    "ios": {"bundleIdentifier": "ao.nossoevento.app"},
+    "web": {"bundler": "metro"}
+  }
+}
