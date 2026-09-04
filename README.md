@@ -1,28 +1,50 @@
 # Nosso Evento
 
-MVP em React Native + Expo para organizar o evento de 19/12/2026.
+Aplicativo React Native + Expo para organização financeira e operacional de um evento.
 
-## Funcionalidades
-- Dashboard financeiro do evento
-- Limite global de 2.500.000 Kz
-- Pendencias com previsto, pago e restante
-- Caixa com entradas e saidas
-- Recomendador de proximas compras preservando 15% de reserva
-- Lista de compras antecipaveis / nao pereciveis
-- Checklist do evento
-- Dados iniciais do evento: 150 convidados, salao, comida, roupas, aliancas, bebidas e itens de cozinha
-- Persistencia local com AsyncStorage
+## Stack
 
-## Rodar
+- Expo SDK 57
+- React 19.2
+- React Native 0.86
+- TypeScript
+- AsyncStorage
+- EAS Build / EAS Submit
+
+## Desenvolvimento
+
 ```bash
 npm install
-npx expo start
+npx expo install --fix
+npm run doctor
+npm start
 ```
 
-Depois use Expo Go no telemovel ou execute no emulador.
+## iOS / App Store
 
-## Observacao sobre sincronizacao do casal
-Esta primeira versao e local-first. Para que duas pessoas usem o mesmo evento em dispositivos diferentes, o proximo passo e ligar o app a Supabase/Firebase com autenticacao e uma tabela compartilhada do evento. A interface e a regra de negocio ja estao separadas para facilitar essa evolucao.
+Leia **docs/RELEASE_IOS.md**.
 
-## Regra de recomendacao
-O app calcula o caixa disponivel, preserva 15% como reserva e ordena pendencias por prioridade, dando vantagem a itens nao pereciveis que podem ser comprados antecipadamente.
+Comandos principais:
+
+```bash
+npm install --global eas-cli
+eas login
+eas init
+npm run credentials:ios
+npm run build:ios
+npm run submit:ios
+```
+
+Para futuras versões, após as credenciais estarem prontas:
+
+```bash
+npm run release:ios
+```
+
+## Importante antes de publicar
+
+- Confirme que `ao.nossoevento.app` está disponível e pertence à tua equipa Apple.
+- Substitua as URLs/contato em `docs/APP_STORE_METADATA.md` e `docs/PRIVACY_POLICY.md`.
+- Publique a política de privacidade numa URL HTTPS.
+- Faça `eas init` para associar o projeto à conta Expo correta.
+- Nunca versione certificados, `.p8`, senhas, tokens ou `.env` com segredos.
